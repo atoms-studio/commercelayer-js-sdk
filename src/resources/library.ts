@@ -14,7 +14,7 @@ import _has from 'lodash/has'
 import first from 'lodash/first'
 import compact from 'lodash/compact'
 import BaseClass from '#utils/BaseClass'
-import { cleanUrl, parserParams } from '#utils/helpers'
+import { cleanUrl } from '#utils/helpers'
 import axios from 'axios'
 import { normalize } from '../utils/helpers'
 
@@ -214,32 +214,32 @@ class ExtendLibrary extends library.Base {
   }
   static setInterceptors(interceptors: any, _klass: any = null) {
     const classThis = this
-    const interceptReq = interceptors?.request
+    // const interceptReq = interceptors?.request
     const interceptResp = interceptors?.response
     const respHandlers = interceptResp?.handlers
-    interceptReq.use(
-      (config) => {
-        if (!isEmpty(config.params)) {
-          config.params = parserParams(config.params)
-        }
-        if (
-          !isEmpty(library?.customInterceptors?.request) &&
-          _has(library?.customInterceptors?.request, 'before')
-        ) {
-          return library.customInterceptors.request.before(config)
-        }
-        return config
-      },
-      (error) => {
-        if (
-          !isEmpty(library?.customInterceptors?.request) &&
-          _has(library?.customInterceptors?.request, 'error')
-        ) {
-          return library.customInterceptors.request.error(error)
-        }
-        return Promise.reject(error)
-      }
-    )
+    // interceptReq.use(
+    //   (config) => {
+    //     if (!isEmpty(config.params)) {
+    //       config.params = parserParams(config.params)
+    //     }
+    //     if (
+    //       !isEmpty(library?.customInterceptors?.request) &&
+    //       _has(library?.customInterceptors?.request, 'before')
+    //     ) {
+    //       return library.customInterceptors.request.before(config)
+    //     }
+    //     return config
+    //   },
+    //   (error) => {
+    //     if (
+    //       !isEmpty(library?.customInterceptors?.request) &&
+    //       _has(library?.customInterceptors?.request, 'error')
+    //     ) {
+    //       return library.customInterceptors.request.error(error)
+    //     }
+    //     return Promise.reject(error)
+    //   }
+    // )
     if (respHandlers?.length === 1 || isEmpty(respHandlers)) {
       interceptResp.handlers.shift()
       interceptResp.use(
