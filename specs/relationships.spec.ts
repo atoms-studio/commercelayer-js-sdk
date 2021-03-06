@@ -2,7 +2,7 @@ import CLayer from '../src'
 import { getTokenBlueBrand } from '../helpers/getToken'
 
 let blueBrandConfig = { accessToken: '', endpoint: '' }
-const { ENDPOINT } = process.env
+const { ENDPOINT, SKU_CODE } = process.env
 beforeAll(async () => {
   const { accessToken } = await getTokenBlueBrand()
   blueBrandConfig = {
@@ -17,7 +17,7 @@ it('SKU --- single relationship --- shippingCategory', async () => {
   const sku = await CLayer.Sku.withCredentials(blueBrandConfig)
     .includes('shippingCategory')
     .findBy({
-      code: 'BABYONBU000000E63E7412MX',
+      code: SKU_CODE,
     })
   expect(sku.shippingCategory()).not.toBeNull()
   expect(sku.shippingCategory().id).not.toBeUndefined()
@@ -28,7 +28,7 @@ it('SKU --- multi relationship --- prices', async () => {
   const sku = await CLayer.Sku.withCredentials(blueBrandConfig)
     .includes('prices')
     .findBy({
-      code: 'BABYONBU000000E63E7412MX',
+      code: SKU_CODE,
     })
   expect(sku.prices()).not.toBeNull()
   expect(
@@ -44,7 +44,7 @@ it('SKU --- multi relationships with includes --- prices', async () => {
   const sku = await CLayer.Sku.withCredentials(blueBrandConfig)
     .includes('prices,stockItems')
     .findBy({
-      code: 'BABYONBU000000E63E7412MX',
+      code: SKU_CODE,
     })
   expect(sku.prices()).not.toBeNull()
   expect(sku.stockItems()).not.toBeNull()

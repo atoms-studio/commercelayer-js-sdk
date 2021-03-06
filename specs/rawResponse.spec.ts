@@ -4,7 +4,7 @@ import { getTokenBlueBrand } from '../helpers/getToken'
 
 let blueBrandConfig = { accessToken: '', endpoint: '' }
 
-const { ENDPOINT } = process.env
+const { ENDPOINT, SKU_CODE, SKU_ID } = process.env
 
 beforeAll(async () => {
   const { accessToken } = await getTokenBlueBrand()
@@ -43,7 +43,7 @@ it('GET SKUs', async () => {
 
 it('GET SKUs with where and includes', async () => {
   const skus = await Sku.withCredentials(blueBrandConfig)
-    .where({ codeIn: 'TSHIRTMMFFFFFF000000LXXX,TSHIRTMM000000E63E74XLXX' })
+    .where({ codeIn: SKU_CODE })
     .includes('prices.priceList')
     .all({
       rawResponse: true,
@@ -72,7 +72,7 @@ it('GET SKUs with select', async () => {
   }
 })
 it('Retrieve an SKU', async () => {
-  const sku = await Sku.withCredentials(blueBrandConfig).find('GZwpOSLVjW', {
+  const sku = await Sku.withCredentials(blueBrandConfig).find(SKU_ID, {
     rawResponse: true,
   })
   expect(sku).toHaveProperty('data')
@@ -83,7 +83,7 @@ it('Retrieve an SKU with select and includes', async () => {
   const sku = await Sku.withCredentials(blueBrandConfig)
     .select('code', { prices: ['currencyCode', 'formattedAmount'] })
     .includes('prices')
-    .find('GZwpOSLVjW', {
+    .find(SKU_ID, {
       rawResponse: true,
     })
   expect(sku).toHaveProperty('data')

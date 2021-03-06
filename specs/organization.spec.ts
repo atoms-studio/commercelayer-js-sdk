@@ -3,7 +3,7 @@ import { getTokenBlueBrand } from '../helpers/getToken'
 
 let blueBrandConfig = { accessToken: '', endpoint: '' }
 
-const { ENDPOINT } = process.env
+const { ENDPOINT, ORGANIZATION_ID } = process.env
 
 beforeAll(async () => {
   const { accessToken } = await getTokenBlueBrand()
@@ -16,5 +16,5 @@ beforeAll(async () => {
 
 it('GET Organization', async () => {
   const organization = await Organization.withCredentials(blueBrandConfig).all()
-  return expect(organization.id).toBe('enWoxFMOnp')
+  return expect(organization.id).toBe(ORGANIZATION_ID)
 })
